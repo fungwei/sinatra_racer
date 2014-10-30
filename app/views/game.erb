@@ -1,0 +1,166 @@
+<script type="text/javascript">
+
+
+$(document).ready(function() {
+  var count1 = 1;
+  var count2 = 1;
+  var win = 0;
+  var win_time = 0.00;
+  var game_end = false;
+  function myTimer() {
+          win_time = win_time + 0.01;
+          win_time_out = win_time.toFixed(2);
+          if (!game_end){
+            document.getElementById("timer").innerHTML = win_time_out;
+          }
+      }
+  var timer = 0;
+
+  $(document).on('keyup', function(event) {
+    if (timer==0){
+      var myVar=setInterval(function(){myTimer()},10);
+      timer = 1;
+    }
+    // Detect which key was pressed and call the appropriate function
+    // Google "jquery keyup what key was pressed" if you don't know how
+    if(event.which == 81) {
+      if (count1==30){
+        count1=31
+        game_end = true
+        $.ajax(
+        {
+            url : '/round_end',
+            type: "POST",
+            data : {winner: "player1", win_time: win_time.toFixed(2)},
+            //debugger
+            success:function(result)
+            {
+              $(".container").html(result);
+              //debugger
+                //data: return data from server
+            },
+            error: function(jqXHR, textStatus, errorThrown)
+            {
+              //debugger
+                //if fails
+            }
+        });
+
+      }else{
+        $("#track_p1_" + count1).removeClass('active');
+        count1 = count1 + 1;
+        $("#track_p1_" + count1).addClass('active');
+      }
+    };
+    if(event.which == 80) {
+      if (count2==30){
+        count2=31
+        game_end = true
+       $.ajax(
+            {
+                url : '/round_end',
+                type: "POST",
+                data : {winner: "player2", win_time: win_time.toFixed(2)},
+                success:function(result)
+                {
+                  $(".container").html(result);
+                  //debugger
+                    //data: return data from server
+                },
+                error: function(jqXHR, textStatus, errorThrown)
+                {
+                  //debugger
+                    //if fails
+                }
+            });
+
+      }else{
+        $("#track_p2_" + count2).removeClass('active');
+        count2 = count2 + 1;
+        $("#track_p2_" + count2).addClass('active');
+      }
+    }
+  });
+
+
+  $("html").on('click', '#race_again', function(e){
+    var postData = $(this).serializeArray();
+    $.ajax(
+    {
+        url : '/round_next',
+        type: "POST",
+        data : {player1_name: "<%= @player1.name %>", player2_name: "<%= @player2.name %>"},
+        success:function(result)
+        {
+          $("#content").html(result);
+          //debugger
+            //data: return data from server
+        },
+        error: function(jqXHR, textStatus, errorThrown)
+        {
+          //debugger
+            //if fails
+        }
+    });
+    // e.preventDefault(); //STOP default action
+    // e.unbind(); //unbind. to stop multiple form submit.
+  });
+
+});
+</script>
+
+<div class="stats p1">
+  <div class="player_name">
+    <h6>Player 1</h6>
+    <h3><%= @player1.name %></h3>
+
+  </div>
+  <div class="player_time">
+    <h6>Best Time</h6>
+    <h4>00:00:12</h4>
+
+  </div>
+  <div><h4>Press Q</h4></div>
+</div>
+
+<div class="round">
+  <h2>Game <%= @game.id %></h2>
+  <h3>Round <%= @round_number %></h3>
+  <br>
+  <h3 id="timer">0.00</h3>
+</div>
+
+<div class="stats p1">
+  <div class="player_name">
+    <h6>Player 2</h6>
+    <h3><%= @player2.name %></h3>
+
+  </div>
+  <div class="player_time">
+    <h6>Best Time</h6>
+    <h4>00:00:12</h4>
+
+  </div>
+  <div><h4>Press Q</h4></div>
+</div>
+
+<div style="clear:both"></div>
+
+<table class="track">
+  <tr>
+    <td id="track_p1_1" class="track_piece active"></td>
+    <% count = 2 %>
+    <% 29.times do %>
+    <td id="track_p1_<%= count %>" class="track_piece"></td>
+    <% count += 1 %>
+    <% end %>
+  </tr>
+  <tr>
+    <td id="track_p2_1" class="track_piece active"></td>
+    <% count = 2 %>
+    <% 29.times do %>
+    <td id="track_p2_<%= count %>" class="track_piece"></td>
+    <% count += 1 %>
+    <% end %>
+  </tr>
+</table>

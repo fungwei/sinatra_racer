@@ -1,9 +1,54 @@
 .container {
   margin: 20px auto;
-  width: 600px;
+  width: 800px;
   padding: 0px 20px 20px 20px;
-  border: 1px dotted black;
 }
 th {
   text-align: left;
+}
+
+.p1{
+  float: left;
+}
+
+.p2{
+  float: left;
+}
+
+.stats{
+text-align: center;
+width: 33.33%;
+}
+
+.player_time h6, .player_name h6{
+  margin-bottom: 2px;
+}
+
+.player_time h4, .player_name h3{
+  margin-top: 2px;
+}
+
+
+.round{
+width: 33.33%;
+float: left;
+text-align: center;
+}
+
+.track_piece{
+  width: 30px;
+  height: 20px;
+  border: 1px solid black;
+}
+
+.track{
+  margin-top: 200px;
+}
+
+.active{
+  background: #000000;
+}
+
+.winner{
+  text-align: center;
 }

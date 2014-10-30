@@ -1,0 +1,42 @@
+<div class="stats p1">
+  <div class="player_name">
+    <h6>Player 1</h6>
+    <h3><%= @player1.name %></h3>
+
+  </div>
+  <div class="player_time">
+    <h6>Best Time</h6>
+    <h4>00:00:12</h4>
+
+  </div>
+  <div><h4>Press Q</h4></div>
+</div>
+
+<div class="round">
+  <h2>Game <%= @game.id %></h2>
+  <h3>Round <%= @round_number %></h3>
+</div>
+
+<div class="stats p1">
+  <div class="player_name">
+    <h6>Player 2</h6>
+    <h3><%= @player2.name %></h3>
+
+  </div>
+  <div class="player_time">
+    <h6>Best Time</h6>
+    <h4>00:00:12</h4>
+
+  </div>
+  <div><h4>Press P</h4></div>
+</div>
+
+<div style="clear:both"></div>
+
+<div class="winner">
+  <h1>Winner: <%= @winner %></h1>
+  <h2><%= @win_time %></h2>
+</div>
+
+<a href="/round_next"><button type="button" class="btn btn-default">Race AGAIN!!!!</button></a>
+<a href="/"><button type="button" class="btn btn-default">End</button></a>
